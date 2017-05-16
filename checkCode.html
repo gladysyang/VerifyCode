@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>生成随机验证码</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.css">
+	<script type="text/javascript" src="jquery.js"></script>
+	<style type="text/css">
+		.check-code {
+			text-align: center;
+			justify-content: center;
+			display: block;
+			margin-top: 100px;
+		}
+		.input-code {
+			height: 37px;
+		    border-radius: 3px;
+		    border: solid 1px gray;
+		    padding-left: 5px;
+		}
+		.code-picture {
+			font-family:Arial;  
+            font-style:italic;  
+            font-weight:bold;  
+            border:0;  
+            letter-spacing:2px;  
+            color:blue;
+            background-color: skyblue;
+		}
+		.verify-code {
+			margin-top: 10px;
+			width: 247px;
+		}
+	</style>
+</head>
+<body　onload="changeCode()">
+	<div class="check-code">
+		<input type="text" name="code" class="input-code" placeholder="请输入验证码" id="input_code" onmousedown="clearInput()">
+		<input class="btn btn-default code-picture" type="button" id="code_picture" onclick="changeCode(4)"><br>
+		<button type="button" class="btn btn-primary verify-code" onclick="verifyCode()">验证</button>
+	</div>
+</body>
+	<script type="text/javascript">
+		/*页面加载时调用某个函数*/
+		window.onload = changeCode(4);
+
+		function changeCode(length) {
+			var code = '';
+			var codePicture = $('#code_picture');
+			var random = new Array(0, 1, 2, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'd', 'e', 'f', 'g', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 't', 'U', 'v', 'W', 'x', 'Y', 'Z');
+			for (var i = 0; i < length; i++) {
+				var index = Math.floor(Math.random() * random.length);
+				code += random[index];
+			}
+			codePicture.val(code);
+		}
+		function verifyCode() {
+			var inputCode = $('#input_code').val();
+			var codePicture = $('#code_picture').val();
+
+			if (inputCode == '') {
+				alert('请输入验证码');
+				return;
+			}
+			if (inputCode.trim() == codePicture.toLowerCase()) {
+				alert('验证成功');
+			} else {
+				alert('验证码错误，请重新输入');
+				clearInput();
+			}
+		}
+		function clearInput() {
+			$('#input_code').val('');
+		}
+	</script>
+</html>
