@@ -38,7 +38,7 @@
     <div class="check-code">
       <input type="text" name="code" class="input-code" placeholder="请输入验证码" id="input_code" onmousedown="clearInput()">
       <input class="btn btn-default code-picture" type="button" id="code_picture" onclick="changeCode(4)"><br>
-      <button type="button" class="btn btn-primary verify-code" onclick="verifyCode()">验证</button>
+      <button class="btn btn-primary verify-code" onclick="verifyCode()">验证</button>
     </div>
   </body>
   <script type="text/javascript">
@@ -64,16 +64,25 @@
         alert('请输入验证码');
         return;
       }
-      if (inputCode.trim() == codePicture.toLowerCase()) {
+      /*1. 支持验证码的大写验证： inputCode.trim() == codePicture*/
+      /*2. 不支持验证码的大写验证： inputCode.trim() == codePicture.toLowerCase()*/
+      if (inputCode.trim() == codePicture) {
         alert('验证成功');
       } else {
         alert('验证码错误，请重新输入');
         clearInput();
+        changeCode(4);
       }
     }
 
     function clearInput() {
       $('#input_code').val('');
     }
+
+    $(document).keydown(function(event) {
+      if(event.keyCode == 13) {
+        verifyCode();
+      }
+    })
   </script>
 </html>
